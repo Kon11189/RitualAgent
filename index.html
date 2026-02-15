@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Ритуал-Могилев | Ритуальные услуги</title>
+  <!-- Подключение шрифта Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', serif;
+      background-color: #0c0f15;
+      color: #e0e0e0;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      width: 100%;
+    }
+
+    /* ОСНОВНАЯ АНИМАЦИЯ ПРИ ЗАГРУЗКЕ - СНИЗУ ВВЕРХ */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Дополнительная задержка для заголовков */
+    .section-title {
+      transition-delay: 0.1s;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 20px;
+      width: 100%;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 5vw, 2.2rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 2rem;
+      position: relative;
+      display: inline-block;
+      color: #fff;
+      word-break: break-word;
+    }
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 70px;
+      height: 3px;
+      background: #c9a05e;
+      margin-top: 8px;
+      transition: width 0.4s ease;
+    }
+    
+    .section-title:hover::after {
+      width: 100px;
+    }
+
+    .btn-gold {
+      background: #c9a05e;
+      color: #0c0f15;
+      font-weight: 600;
+      padding: 14px 28px;
+      border: none;
+      border-radius: 40px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 6px 14px rgba(201, 160, 94, 0.15);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(255,215,120,0.3);
+      text-decoration: none;
+      white-space: nowrap;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn-gold::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease;
+    }
+    
+    .btn-gold:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+    
+    @media (max-width: 480px) {
+      .btn-gold {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+        white-space: normal;
+        min-width: 160px;
+        justify-content: center;
+      }
+    }
+    
+    .btn-gold i {
+      font-size: 1.1rem;
+      transition: transform 0.3s ease;
+    }
+    
+    .btn-gold:hover i {
+      transform: translateX(3px);
+    }
+    
+    .btn-gold:hover {
+      background: #b3894a;
+      box-shadow: 0 15px 30px rgba(201, 160, 94, 0.4);
+      transform: translateY(-3px) scale(1.02);
+      color: #fff;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid #c9a05e;
+      color: #c9a05e;
+      font-weight: 500;
+      padding: 12px 26px;
+      border-radius: 40px;
+      transition: all 0.4s ease;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      white-space: nowrap;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn-outline::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(201, 160, 94, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+    
+    .btn-outline:hover::before {
+      left: 100%;
+    }
+    
+    @media (max-width: 480px) {
+      .btn-outline {
+        padding: 10px 18px;
+        font-size: 0.9rem;
+        white-space: normal;
+      }
+    }
+    
+    .btn-outline:hover {
+      background: #c9a05e;
+      color: #0c0f15;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(201, 160, 94, 0.2);
+    }
+
+    /* Шапка */
+    .header {
+      padding: 15px 0;
+      border-bottom: 1px solid #2a2f3a;
+      background: rgba(12, 15, 21, 0.98);
+      backdrop-filter: blur(6px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      transition: padding 0.3s ease, background 0.3s ease;
+    }
+    
+    .header.scrolled {
+      padding: 10px 0;
+      background: rgba(8, 10, 15, 0.98);
+    }
+    
+    .header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    
+    .logo h1 {
+      font-size: clamp(1.3rem, 4vw, 1.8rem);
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+      transition: color 0.3s ease;
+      white-space: nowrap;
+    }
+    .logo:hover h1 {
+      color: #c9a05e;
+    }
+    .logo span {
+      color: #c9a05e;
+      font-weight: 300;
+      font-size: 0.8rem;
+      display: block;
+      line-height: 1.2;
+      transition: transform 0.3s ease;
+    }
+    .logo:hover span {
+      transform: translateX(5px);
+    }
+    .header-phone {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #c9a05e;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+      padding: 8px 0;
+    }
+    .header-phone:hover {
+      color: #b3894a;
+      transform: scale(1.02);
+    }
+    .header-phone i {
+      margin-right: 8px;
+      font-size: 1.1rem;
+    }
+    
+    @media (max-width: 768px) {
+      .header .container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .logo {
+        margin-bottom: 5px;
+      }
+      .header-phone {
+        font-size: 1.2rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .header .container {
+        flex-direction: column;
+        align-items: center;
+      }
+      .header-phone {
+        font-size: 1.1rem;
+        margin-top: 0;
+      }
+      .logo h1 {
+        font-size: 1.4rem;
+      }
+    }
+
+    .hero {
+      padding: 50px 0 60px;
+      background: linear-gradient(145deg, #0b0e13 0%, #141a22 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(201,160,94,0.08) 0%, transparent 70%);
+      top: -200px;
+      right: -200px;
+      border-radius: 50%;
+      animation: float 20s infinite alternate ease-in-out;
+    }
+    
+    @keyframes float {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(-30px, 30px) scale(1.1); }
+    }
+    
+    .hero-content {
+      max-width: 100%;
+      width: 100%;
+      position: relative;
+      z-index: 2;
+    }
+    .hero h2 {
+      font-size: clamp(1.8rem, 6vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.2;
+      color: #fff;
+      margin-bottom: 20px;
+      word-break: break-word;
+      hyphens: auto;
+      animation: slideInUp 1s ease forwards;
+    }
+    
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .hero .gold-text {
+      color: #c9a05e;
+      display: inline;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .hero .gold-text::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #c9a05e;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.5s ease;
+    }
+    
+    .hero:hover .gold-text::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+    
+    .hero .subtitle {
+      font-size: clamp(1rem, 4vw, 1.2rem);
+      margin-bottom: 30px;
+      color: #b0b5c0;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      animation: slideInUp 1s ease 0.2s both;
+    }
+    
+    .hero .subtitle i {
+      color: #c9a05e;
+      transition: transform 0.3s ease;
+    }
+    
+    .hero .subtitle i:hover {
+      transform: scale(1.2);
+    }
+    .hero-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      align-items: center;
+      animation: slideInUp 1s ease 0.4s both;
+    }
+    
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .services {
+      padding: 60px 0;
+      background: #0f131a;
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 25px;
+      margin-top: 30px;
+    }
+    .service-card {
+      background: #171d27;
+      border-radius: 24px;
+      padding: 30px 20px;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: 1px solid #2a2f3a;
+      box-shadow: 0 12px 24px -8px rgba(0,0,0,0.5);
+      text-align: center;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, transparent 0%, rgba(201, 160, 94, 0.1) 100%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    
+    .service-card:hover::before {
+      opacity: 1;
+    }
+    
+    .service-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      border-color: #c9a05e;
+      background: #1b222d;
+      box-shadow: 0 20px 30px -10px rgba(201, 160, 94, 0.3);
+    }
+    .service-icon {
+      font-size: 2.8rem;
+      color: #c9a05e;
+      margin-bottom: 20px;
+      transition: transform 0.4s ease;
+    }
+    
+    .service-card:hover .service-icon {
+      transform: scale(1.1) rotate(5deg);
+    }
+    .service-card h3 {
+      font-size: clamp(1.3rem, 4vw, 1.6rem);
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #fff;
+      transition: color 0.3s ease;
+    }
+    
+    .service-card:hover h3 {
+      color: #c9a05e;
+    }
+    .service-card p {
+      color: #a5a9b4;
+      font-size: 1rem;
+      word-break: break-word;
+      transition: color 0.3s ease;
+    }
+    
+    .service-card:hover p {
+      color: #d0d5e0;
+    }
+
+    /* СЛАЙД-ШОУ */
+    .slideshow {
+      padding: 60px 0;
+      background: #0c0f15;
+    }
+    
+    .slider-container {
+      position: relative;
+      max-width: 1000px;
+      margin: 0 auto;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 30px -10px rgba(0,0,0,0.8);
+      border: 1px solid #2a2f3a;
+    }
+    
+    .slider {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+    
+    .slide {
+      min-width: 100%;
+      aspect-ratio: 16/9;
+      background-size: cover;
+      background-position: center;
+      background-color: #1a1f2a;
+    }
+    
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 50px;
+      height: 50px;
+      background: rgba(12, 15, 21, 0.7);
+      border: 2px solid #c9a05e;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #c9a05e;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 10;
+      backdrop-filter: blur(5px);
+    }
+    
+    .slider-btn:hover {
+      background: #c9a05e;
+      color: #0c0f15;
+      transform: translateY(-50%) scale(1.1);
+    }
+    
+    .slider-btn.prev {
+      left: 20px;
+    }
+    
+    .slider-btn.next {
+      right: 20px;
+    }
+    
+    .slider-dots {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 12px;
+      z-index: 10;
+    }
+    
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.4);
+      border: 1px solid #c9a05e;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .dot.active {
+      background: #c9a05e;
+      transform: scale(1.2);
+    }
+    
+    .dot:hover {
+      background: #c9a05e;
+    }
+    
+    @media (max-width: 768px) {
+      .slider-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+      }
+      .slider-btn.prev {
+        left: 10px;
+      }
+      .slider-btn.next {
+        right: 10px;
+      }
+    }
+
+    /* Блок О нас */
+    .about {
+      padding: 60px 0;
+      background: #0f131a;
+    }
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: start;
+    }
+    .about-text p {
+      margin-bottom: 20px;
+      color: #b0b7c3;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+    .about-text p:last-child {
+      margin-bottom: 0;
+    }
+    .about-features {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    .about-feature {
+      background: #171d27;
+      border-radius: 20px;
+      padding: 25px 20px;
+      text-align: center;
+      border: 1px solid #2a2f3a;
+      transition: all 0.3s ease;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .about-feature:hover {
+      border-color: #c9a05e;
+      transform: translateY(-5px);
+      box-shadow: 0 15px 25px -10px rgba(201,160,94,0.2);
+    }
+    .about-feature i {
+      font-size: 2.5rem;
+      color: #c9a05e;
+      margin-bottom: 15px;
+      transition: transform 0.3s ease;
+    }
+    .about-feature:hover i {
+      transform: scale(1.1);
+    }
+    .about-feature h4 {
+      color: #fff;
+      margin-bottom: 8px;
+      font-size: 1.2rem;
+    }
+    .about-feature p {
+      color: #9fa6b5;
+      font-size: 0.95rem;
+      line-height: 1.4;
+      max-width: 180px;
+      margin: 0 auto;
+    }
+    
+    @media (max-width: 768px) {
+      .about-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      .about-features {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .about-features {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Блок Контакты */
+    .contacts {
+      padding: 60px 0;
+      background: #0c0f15;
+    }
+    .contacts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-top: 30px;
+    }
+    .contact-info {
+      background: #171d27;
+      border-radius: 24px;
+      padding: 30px;
+      border: 1px solid #2a2f3a;
+    }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #2a2f3a;
+    }
+    .contact-item:last-of-type {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    .contact-icon {
+      width: 45px;
+      height: 45px;
+      background: #1e232b;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      color: #c9a05e;
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+    }
+    .contact-item:hover .contact-icon {
+      background: #c9a05e;
+      color: #0c0f15;
+      transform: scale(1.1);
+    }
+    .contact-text h4 {
+      color: #fff;
+      margin-bottom: 3px;
+      font-size: 1rem;
+    }
+    .contact-text p, .contact-text a {
+      color: #b0b7c3;
+      text-decoration: none;
+      transition: color 0.3s ease;
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+    .contact-text a:hover {
+      color: #c9a05e;
+    }
+    .contact-social {
+      display: flex;
+      gap: 12px;
+      margin-top: 25px;
+    }
+    .contact-social a {
+      width: 40px;
+      height: 40px;
+      background: #1e232b;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #c9a05e;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+      border: 1px solid #2a2f3a;
+    }
+    .contact-social a:hover {
+      background: #c9a05e;
+      color: #0c0f15;
+      transform: translateY(-3px);
+    }
+    .contact-map {
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid #2a2f3a;
+      height: 100%;
+      min-height: 380px;
+    }
+    .contact-map iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    
+    @media (max-width: 768px) {
+      .contacts-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      .contact-map {
+        min-height: 300px;
+      }
+    }
+
+    .footer {
+      background: #080b10;
+      padding: 40px 0 30px;
+      border-top: 1px solid #21262f;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #c9a05e, transparent);
+      animation: footerLine 3s infinite;
+    }
+    
+    @keyframes footerLine {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+    }
+    .footer-col h4 {
+      color: #c9a05e;
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .footer-col h4::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 30px;
+      height: 2px;
+      background: #c9a05e;
+      transition: width 0.3s ease;
+    }
+    
+    .footer-col:hover h4::after {
+      width: 100%;
+    }
+    
+    .footer-col p, .footer-col a {
+      color: #b0b7c3;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      transition: all 0.3s ease;
+      word-break: break-word;
+      overflow-wrap: break-word;
+      max-width: 100%;
+    }
+    .footer-col a:hover {
+      color: #c9a05e;
+      transform: translateX(5px);
+    }
+    .footer-col a:hover i {
+      transform: scale(1.2);
+    }
+    .footer-col i {
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+    }
+    .footer .unp {
+      color: #6f7887;
+      font-size: 0.9rem;
+      border-top: 1px solid #20252e;
+      margin-top: 40px;
+      padding-top: 30px;
+      text-align: center;
+      transition: color 0.3s ease;
+      word-break: break-word;
+      max-width: 100%;
+    }
+    
+    .footer .unp:hover {
+      color: #c9a05e;
+    }
+
+    .floating-call {
+      position: fixed;
+      bottom: 25px;
+      right: 20px;
+      background: #c9a05e;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 20px rgba(201, 160, 94, 0.5);
+      z-index: 99;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: 2px solid #fff2d2;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      animation: callPulse 2s infinite;
+    }
+    
+    @keyframes callPulse {
+      0% { box-shadow: 0 8px 20px rgba(201, 160, 94, 0.5); }
+      50% { box-shadow: 0 12px 30px rgba(201, 160, 94, 0.8); }
+      100% { box-shadow: 0 8px 20px rgba(201, 160, 94, 0.5); }
+    }
+    
+    .floating-call a {
+      color: #0c0f15;
+      font-size: 1.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.3s ease;
+    }
+    
+    .floating-call:hover {
+      transform: scale(1.15) rotate(5deg);
+    }
+    
+    .floating-call:hover a {
+      transform: scale(1.1);
+    }
+
+    @media (max-width: 768px) {
+      .floating-call {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: all;
+      }
+    }
+
+    .service-card, .about-feature {
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards;
+    }
+    
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    
+    .service-card:nth-child(1) { animation-delay: 0.1s; }
+    .service-card:nth-child(2) { animation-delay: 0.2s; }
+    .service-card:nth-child(3) { animation-delay: 0.3s; }
+  </style>
+</head>
+<body>
+
+<header class="header" id="header">
+  <div class="container">
+    <div class="logo">
+      <h1>Ритуал-Могилев</h1>
+      <span>Память навсегда</span>
+    </div>
+    <a href="tel:+375291234567" class="header-phone"><i class="fas fa-phone-alt"></i> +375 (29) 123-45-67</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <h2>Ритуальные услуги с заботой о вас. <span class="gold-text">Выезжаем в любой город Беларуси</span></h2>
+      <div class="subtitle">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <i class="fas fa-clock"></i> 24/7 без выходных
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <i class="fas fa-map-marker-alt"></i> Могилев (базовый офис) + выезд по всей Беларуси
+        </div>
+      </div>
+      <div class="hero-btns">
+        <a href="tel:+375291234567" class="btn-gold"><i class="fas fa-headset"></i> Вызвать агента</a>
+        <button class="btn-outline" id="portfolioScroll"><i class="fas fa-images"></i> Наши работы</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="services">
+  <div class="container">
+    <h2 class="section-title fade-up">Наши услуги</h2>
+    <div class="cards-grid">
+      <div class="service-card fade-up">
+        <div class="service-icon"><i class="fas fa-hands"></i></div>
+        <h3>Организация похорон</h3>
+        <p>Комплекс услуг с выездом в ваш населенный пункт: от документации до места захоронения. Чутко и оперативно.</p>
+      </div>
+      <div class="service-card fade-up">
+        <div class="service-icon"><i class="fas fa-monument"></i></div>
+        <h3>Памятники и благоустройство</h3>
+        <p>Гранит, мрамор, установка, благоустройство могил. Индивидуальные проекты с доставкой в любой город.</p>
+      </div>
+      <div class="service-card fade-up">
+        <div class="service-icon"><i class="fas fa-truck"></i></div>
+        <h3>Ритуальный транспорт и принадлежности</h3>
+        <p>Катафалк, автобус для сопровождения, венки, кресты, ткани. Организуем доставку по всей Беларуси.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- СЛАЙД-ШОУ -->
+<section class="slideshow" id="portfolio">
+  <div class="container">
+    <h2 class="section-title fade-up">Наши работы</h2>
+    <div class="slider-container fade-up">
+      <div class="slider" id="slider">
+        <div class="slide" style="background-image: url('https://placehold.co/1200x675/1a1f2a/c9a05e?text=')"></div>
+        <div class="slide" style="background-image: url('https://placehold.co/1200x675/1a1f2a/c9a05e?text=')"></div>
+        <div class="slide" style="background-image: url('https://placehold.co/1200x675/1a1f2a/c9a05e?text=')"></div>
+        <div class="slide" style="background-image: url('https://placehold.co/1200x675/1a1f2a/c9a05e?text=')"></div>
+        <div class="slide" style="background-image: url('https://placehold.co/1200x675/1a1f2a/c9a05e?text=')"></div>
+        <div class="slide" style="background-image: url('https://placehold.co/1200x675/1a1f2a/c9a05e?text=')"></div>
+      </div>
+      
+      <button class="slider-btn prev" id="prevSlide"><i class="fas fa-chevron-left"></i></button>
+      <button class="slider-btn next" id="nextSlide"><i class="fas fa-chevron-right"></i></button>
+      
+      <div class="slider-dots" id="sliderDots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Блок О нас -->
+<section class="about">
+  <div class="container">
+    <h2 class="section-title fade-up">О нас</h2>
+    <div class="about-content">
+      <div class="about-text fade-up">
+        <p>Мы понимаем, как важно в трудную минуту чувствовать поддержку и уверенность. Наше агентство работает с 2010 года, и за это время мы помогли тысячам семей проводить близких с достоинством и уважением.</p>
+        <p>Главный принцип нашей работы — человеческое отношение и прозрачность. Мы не навязываем лишних услуг, а помогаем принять правильное решение, учитывая ваши пожелания и возможности.</p>
+        <p>Выезжаем в любой город Беларуси, работаем круглосуточно и без выходных. Просто позвоните — и мы возьмем все хлопоты на себя.</p>
+      </div>
+      <div class="about-features">
+        <div class="about-feature fade-up">
+          <i class="fas fa-heart"></i>
+          <h4>С заботой</h4>
+          <p>Индивидуальный подход к каждой семье</p>
+        </div>
+        <div class="about-feature fade-up">
+          <i class="fas fa-shield-alt"></i>
+          <h4>Надежно</h4>
+          <p>15 лет безупречной работы</p>
+        </div>
+        <div class="about-feature fade-up">
+          <i class="fas fa-clock"></i>
+          <h4>24/7</h4>
+          <p>Круглосуточно на связи</p>
+        </div>
+        <div class="about-feature fade-up">
+          <i class="fas fa-car"></i>
+          <h4>Выезд</h4>
+          <p>По всей Беларуси</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Блок Контакты (адрес изменён на ул. Симонова, 6) -->
+<section class="contacts" id="contacts">
+  <div class="container">
+    <h2 class="section-title fade-up">Контакты</h2>
+    <div class="contacts-grid">
+      <div class="contact-info fade-up">
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
+          <div class="contact-text">
+            <h4>Телефон</h4>
+            <p><a href="tel:+375291234567">+375 (29) 123-45-67</a></p>
+            <p><a href="tel:+375222123456">+375 (222) 12-34-56</a></p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div class="contact-text">
+            <h4>Адрес</h4>
+            <p>г. Могилев, ул. Симонова, 6 (офис 5)</p>
+            <p>Работаем по всей Беларуси</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fas fa-clock"></i></div>
+          <div class="contact-text">
+            <h4>Режим работы</h4>
+            <p>Круглосуточно, без выходных</p>
+            <p>Прием звонков 24/7</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+          <div class="contact-text">
+            <h4>Email</h4>
+            <p><a href="mailto:ritual@mogilev.by">ritual@mogilev.by</a></p>
+          </div>
+        </div>
+        <div class="contact-social">
+          <a href="https://wa.me/375291234567?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9C%D0%B5%D0%BD%D1%8F%20%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%83%D1%8E%D1%82%20%D1%80%D0%B8%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5%20%D1%83%D1%81%D0%BB%D1%83%D0%B3%D0%B8." target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i></a>
+          <a href="https://t.me/+375291234567" target="_blank" rel="noopener noreferrer"><i class="fab fa-telegram"></i></a>
+          <a href="viber://chat?number=%2B375291234567" target="_blank" rel="noopener noreferrer"><i class="fab fa-viber"></i></a>
+        </div>
+      </div>
+      <div class="contact-map fade-up">
+        <!-- Яндекс.Карты с меткой офиса на ул. Симонова, 6 -->
+        <iframe src="https://yandex.ru/map-widget/v1/?ll=30.3450%2C53.8945&z=17&pt=30.3450%2C53.8945%2Cpm2bll&l=map" width="100%" height="100%" frameborder="0" allowfullscreen="true"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col fade-up">
+        <h4>Ритуал-Могилев</h4>
+        <p><i class="fas fa-map-pin"></i> Центральный офис: г. Могилев, ул. Симонова, 6</p>
+        <p><i class="fas fa-clock"></i> Круглосуточно, без выходных</p>
+      </div>
+      <div class="footer-col fade-up">
+        <h4>Контакты</h4>
+        <p><a href="tel:+375291234567"><i class="fas fa-phone-alt"></i> +375 (29) 123-45-67</a></p>
+        <p><a href="tel:+375222123456"><i class="fas fa-phone-alt"></i> +375 (222) 12-34-56</a></p>
+        <p><a href="mailto:ritual@mogilev.by"><i class="fas fa-envelope"></i> ritual@mogilev.by</a></p>
+      </div>
+      <div class="footer-col fade-up">
+        <h4>Реквизиты</h4>
+        <p>УНП 712345678</p>
+        <p>р/с BY00XXXX в ОАО «Беларусбанк»</p>
+      </div>
+    </div>
+    <div class="unp fade-up">
+      © 2026 Ритуал-Могилев. Все права защищены. <br> Работаем с достоинством и уважением в любом городе Беларуси.
+    </div>
+  </div>
+</footer>
+
+<div class="floating-call">
+  <a href="tel:+375291234567"><i class="fas fa-phone-alt"></i></a>
+</div>
+
+<script>
+  (function() {
+    // Intersection Observer для плавного появления элементов при скролле
+    const fadeElements = document.querySelectorAll('.fade-up');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    });
+    
+    fadeElements.forEach(element => {
+      observer.observe(element);
+    });
+
+    // Эффект скролла для шапки
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Плавный скролл к портфолио (с учетом отступа от шапки)
+    const portfolioBtn = document.getElementById('portfolioScroll');
+    if (portfolioBtn) {
+      portfolioBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const portfolioSection = document.getElementById('portfolio');
+        const headerHeight = document.querySelector('.header').offsetHeight;
+        const targetPosition = portfolioSection.offsetTop - headerHeight - 20; // небольшой отступ
+        
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+      });
+    }
+
+    // СЛАЙД-ШОУ
+    const slider = document.getElementById('slider');
+    const slides = document.querySelectorAll('.slide');
+    const prevBtn = document.getElementById('prevSlide');
+    const nextBtn = document.getElementById('nextSlide');
+    const dots = document.querySelectorAll('.dot');
+    
+    let currentSlide = 0;
+    const slideCount = slides.length;
+    let slideInterval;
+    
+    function updateSlide(index) {
+      if (index < 0) index = slideCount - 1;
+      if (index >= slideCount) index = 0;
+      
+      slider.style.transform = `translateX(-${index * 100}%)`;
+      
+      dots.forEach((dot, i) => {
+        if (i === index) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
+      
+      currentSlide = index;
+    }
+    
+    function nextSlide() {
+      updateSlide(currentSlide + 1);
+    }
+    
+    function prevSlide() {
+      updateSlide(currentSlide - 1);
+    }
+    
+    function startAutoSlide() {
+      slideInterval = setInterval(nextSlide, 4000);
+    }
+    
+    function stopAutoSlide() {
+      clearInterval(slideInterval);
+    }
+    
+    if (prevBtn && nextBtn) {
+      prevBtn.addEventListener('click', () => {
+        prevSlide();
+        stopAutoSlide();
+        startAutoSlide();
+      });
+      
+      nextBtn.addEventListener('click', () => {
+        nextSlide();
+        stopAutoSlide();
+        startAutoSlide();
+      });
+    }
+    
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        updateSlide(index);
+        stopAutoSlide();
+        startAutoSlide();
+      });
+    });
+    
+    startAutoSlide();
+  })();
+</script>
+</body>
+</html>
