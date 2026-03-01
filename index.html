@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UpScale Ultra</title>
+    <style>
+        body { margin: 0; background: #08080c; color: #fff; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
+        .card { text-align: center; background: #12121f; padding: 25px; border-radius: 20px; width: 85%; border: 2px solid #00d4ff; box-shadow: 0 0 30px rgba(0, 212, 255, 0.2); }
+        #launch-btn { 
+            background: #00d4ff; border: none; padding: 20px; border-radius: 15px; 
+            color: #000; font-size: 22px; width: 100%; cursor: pointer; font-weight: bold;
+            margin-top: 10px; -webkit-tap-highlight-color: transparent;
+        }
+        #launch-btn.active { background: #ff3e3e; color: #fff; transform: scale(0.98); }
+        #status { margin: 15px 0; color: #00d4ff; font-weight: bold; text-transform: uppercase; font-size: 14px; }
+        #console { background: #000; color: #0f0; font-family: monospace; font-size: 11px; padding: 12px; border-radius: 10px; margin-top: 20px; text-align: left; height: 150px; overflow-y: auto; border: 1px solid #333; width: 100%; box-sizing: border-box; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h1 style="margin:0; letter-spacing:4px; color:#00d4ff;">UPSCALE</h1>
+    <p style="font-size:10px; color:#666;">MODEL: GEMINI 2.5 FLASH-LITE</p>
+    <div id="status">Нажми и начни говорить</div>
+    <button id="launch-btn">LAUNCH AD</button>
+    <div id="console">Система ожидает...</div>
+</div>
+
+<script>
+    const API_KEY = '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';
+    const MODEL = 'google/gemini-2.0-flash-lite-preview-02-05'; // Платная версия 2.5
+
+    const btn = document.getElementById('launch-btn');
+    const status = document.getElementById('status');
+    const cons = document.getElementById('console');
+
+    let recognition;
+    let isRecording = false;
+
+    function log(msg) { 
+        cons.innerHTML += `<div>> ${msg}</div>`; 
+        cons.scrollTop = cons.scrollHeight; 
+    }
+
+    // Инициализация микрофона с защитой от мгновенного сброса
+    function setupRecognition() {
+        const Speech = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!Speech) return log("ОШИБКА: Браузер не поддерживает голос");
+
+        recognition = new Speech();
+        recognition.lang = 'ru-RU';
+        recognition.continuous = false; // Для мобильных это стабильнее
+        recognition.interimResults = false;
+
+        recognition.onstart = () => { log("Микрофон активен. Говорите!"); };
+        
+        recognition.onresult = (e) => {
+            const text = e.results[0][0].transcript;
+            log("РАСПОЗНАНО: " + text);
+            sendToNick(text);
+        };
+
+        recognition.onerror = (e) => {
+            log("ОШИБКА: " + e.error);
+            if (e.error === 'aborted') {
+                log("СОВЕТ: Начинай говорить СРАЗУ после нажатия.");
+            }
+            resetBtn();
+        };
+
+        recognition.onend = () => { if(isRecording) recognition.start(); };
+    }
+
+    setupRecognition();
+
+    btn.onclick = () => {
+        if (!isRecording) {
+            isRecording = true;
+            btn.classList.add('active');
+            btn.innerText = "СТОП / ОТПРАВИТЬ";
+            status.innerText = "СЛУШАЮ...";
+            try {
+                recognition.start();
+            } catch(e) { log("Ошибка старта: " + e.message); }
+        } else {
+            isRecording = false;
+            recognition.stop();
+            resetBtn();
+        }
+    };
+
+    function resetBtn() {
+        isRecording = false;
+        btn.classList.remove('active');
+        btn.innerText = "LAUNCH AD";
+        status.innerText = "ОБРАБОТКА...";
+    }
+
+    async function sendToNick(text) {
+        log("Запрос к Gemini 2.5...");
+        try {
+            const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${API_KEY}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    "model": MODEL,
+                    "messages": [{"role": "user", "content": text}]
+                })
+            });
+            const data = await res.json();
+            if (data.choices) {
+                const reply = data.choices[0].message.content;
+                log("НИК ОТВЕТИЛ!");
+                status.innerText = "НИК ГОВОРИТ...";
+                speak(reply);
+            } else {
+                log("API ERROR: " + JSON.stringify(data.error));
+            }
+        } catch(e) { log("СЕТЬ: " + e.message); }
+    }
+
+    function speak(text) {
+        window.speechSynthesis.cancel();
+        const m = new SpeechSynthesisUtterance(text);
+        m.lang = 'ru-RU';
+        window.speechSynthesis.speak(m);
+        m.onend = () => { status.innerText = "ГОТОВ"; log("Конец связи."); };
+    }
+</script>
+</body>
+</html>
